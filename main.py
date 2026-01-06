@@ -18,6 +18,10 @@ from inject import inject
 
 app = FastAPI()
 
+@app.get("/")
+def root():
+    return {"message": "RAG System is running", "status": "healthy"}
+
 @app.post("/login")
 def login(username: str):
     # deterministic scope
@@ -44,12 +48,18 @@ async def inject_file(
     else:
         return {"error": f"Unsupported file type. Supported: .pdf, .csv, .docx, .txt"}
 
-    path = f"temp/{file.filename}"
-    with open(path, "wb") as f:
-        f.write(await file.read())
+    try:
+        # Ensure temp directory exists
+        os.makedirs("temp", exist_ok=True)
+        
+        path = f"temp/{file.filename}"
+        with open(path, "wb") as f:
+            f.write(await file.read())
 
-    inject(source_type, path, scope_id)
-    return {"status": "Done loading"}
+        inject(source_type, path, scope_id)
+        return {"status": "Done loading"}
+    except Exception as e:
+        return {"error": f"Failed to process file: {str(e)}"}
 
 
 
