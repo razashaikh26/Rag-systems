@@ -1,0 +1,42 @@
+# Core web framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Authentication
+python-jose[cryptography]==3.3.0
+python-multipart==0.0.6
+
+# Environment management
+python-dotenv==1.0.0
+
+# LangChain core components
+langchain-core==0.2.38
+langchain-community==0.2.16
+langchain-text-splitters==0.2.2
+
+# LangChain integrations
+langchain-groq==0.1.9
+langchain-huggingface==0.0.3
+langchain-chroma==0.1.2
+
+# Vector database
+chromadb==0.4.15
+
+# Document processing
+pypdf==3.17.1
+docx2txt==0.8
+
+# Machine learning and embeddings
+sentence-transformers==2.2.2
+torch==2.1.0
+transformers==4.35.0
+huggingface-hub==0.19.4
+
+# Additional utilities
+numpy==1.24.3
+pandas==2.1.4
+requests==2.31.0
+Pillow==10.1.0
+
+# Optional: For better performance
+accelerate==0.24.1

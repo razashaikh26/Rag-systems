@@ -1,0 +1,7 @@
+    1.  Load PDF / DOC / Web / CSV
+	2.	Recursive chunking
+	3.	Add metadata (source, page, row)
+	4.	HF embedding model
+	5.	Store vectors in Chroma
+	6.	Hybrid retrieval (BM25 + similarity)
+	7.	Top-3 context LLM

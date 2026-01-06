@@ -1,0 +1,11 @@
+from langchain_chroma import Chroma  # Updated import
+from embedding.embed import get_embeddings
+
+def store_chunks(chunks):
+    db = Chroma.from_documents(
+        documents=chunks,
+        embedding=get_embeddings(),
+        persist_directory="./chroma_db"
+    )
+    # Note: Chroma automatically persists when using persist_directory
+    return db
