@@ -72,8 +72,6 @@ async def ask(
     if not top_doc or len(top_doc.page_content.strip()) < 10:
         return {"answer": "I don't know"}
 
-    print("RETRIEVED DOC:\n", top_doc.page_content)
-
     answer = rag_chain.invoke({
         "context": top_doc.page_content,
         "question": query_rewriting

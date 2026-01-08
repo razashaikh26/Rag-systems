@@ -54,26 +54,38 @@ def rewrite(query):
     print(query)
     q_norm = query.lower()
 
+    best_rewrite = None
+
+    for line in lines:
+        line = line.lstrip("0123456789. ").strip()
+
+        if line.lower() == q_norm:
+            continue
+
+        if line.lower().startswith(("question:", "incomplete query:", "rewritten")):
+            if ":" in line:
+                extracted = line.split(":", 1)[1].strip()
+                # Make sure it's not empty and is a proper question
+                if extracted and len(extracted.split()) >= 3 and extracted.endswith("?"):
+                    best_rewrite = extracted
+                    break  
+
+    if best_rewrite:
+        print(f"REWRITTEN TO: {best_rewrite}")
+        return best_rewrite
+
     for line in lines:
         line = line.lstrip("0123456789. ").strip()
 
         # Skip if it's the same as original
         if line.lower() == q_norm:
             continue
-
-        # Skip header lines
-        if line.lower().startswith(("question:", "intent:", "incomplete", "rewritten")):
-            # Extract the actual question after the colon
-            if ":" in line:
-                extracted = line.split(":", 1)[1].strip()
-                if len(extracted.split()) >= 3 and extracted.endswith("?"):
-                    return extracted
+        if line.lower().startswith(("intent:", "inferred", "question:", "incomplete")) or not line.endswith("?"):
             continue
 
-        # Look for a good complete question
-        if len(line.split()) >= 3 and line.endswith("?"):
+        if len(line.split()) >= 3:
+            print(f"REWRITTEN TO: {line}")
             return line
 
-
-    # If no good rewrite found, return original
+    print(f"NO REWRITE FOUND, USING ORIGINAL: {query}")
     return query

@@ -27,7 +27,7 @@ Answer:
 model = ChatGroq(
     model="llama-3.1-8b-instant",
     api_key=os.getenv("grok"),
-    max_tokens= 100 
+    max_tokens= 150
 )
 
 parser = StrOutputParser()
