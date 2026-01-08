@@ -9,7 +9,7 @@ def get_vector_retriever(scope_id: str):
 
     return db.as_retriever(
         search_kwargs={
-            "k": 3,
+            "k": 5,
             "filter": {"scope_id": scope_id}
         }
     )
