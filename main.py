@@ -4,6 +4,7 @@ import hashlib
 from fastapi import FastAPI,Depends,UploadFile, Form
 from auth.dependencies import get_scope_id
 from auth.jwtutils import create_scope_token
+from rewrite.queryrewrite import rewrite
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -17,10 +18,6 @@ TEMP_DIR.mkdir(exist_ok=True)
 from inject import inject
 
 app = FastAPI()
-
-@app.get("/")
-def root():
-    return {"message": "RAG System is running", "status": "healthy"}
 
 @app.post("/login")
 def login(username: str):
@@ -48,18 +45,12 @@ async def inject_file(
     else:
         return {"error": f"Unsupported file type. Supported: .pdf, .csv, .docx, .txt"}
 
-    try:
-        # Ensure temp directory exists
-        os.makedirs("temp", exist_ok=True)
-        
-        path = f"temp/{file.filename}"
-        with open(path, "wb") as f:
-            f.write(await file.read())
+    path = f"temp/{file.filename}"
+    with open(path, "wb") as f:
+        f.write(await file.read())
 
-        inject(source_type, path, scope_id)
-        return {"status": "Done loading"}
-    except Exception as e:
-        return {"error": f"Failed to process file: {str(e)}"}
+    inject(source_type, path, scope_id)
+    return {"status": "Done loading"}
 
 
 
@@ -74,15 +65,18 @@ async def ask(
     question: str,
     scope_id: str = Depends(get_scope_id)
 ):
+    query_rewriting = rewrite(question) #rewrite 
     vector_retriever = get_vector_retriever(scope_id)
-    top_doc = hybrid_retrieve_top1(question, bm25_retriever, vector_retriever, scope_id)
+    top_doc = hybrid_retrieve_top1(query_rewriting, bm25_retriever, vector_retriever, scope_id)
 
     if not top_doc or len(top_doc.page_content.strip()) < 10:
         return {"answer": "I don't know"}
 
+    print("RETRIEVED DOC:\n", top_doc.page_content)
+
     answer = rag_chain.invoke({
         "context": top_doc.page_content,
-        "question": question
+        "question": query_rewriting
     })
 
     return {"answer": answer}

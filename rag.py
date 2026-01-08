@@ -5,11 +5,13 @@ import os
 
 rag_prompt = PromptTemplate(
     template="""
-You are a helpful question-answering assistant.
+You are a precise question-answering assistant.
 
-Answer the question ONLY using the context below.
+Answer the question using ONLY the context below.
+The question may be incomplete — infer the intended question and answer it correctly.
+If the answer is a person, return ONLY the person's name.
 If the answer is not present in the context, say:
-"I don't know."
+"Not in your documents."
 
 Context:
 {context}
@@ -21,9 +23,11 @@ Answer:
 """,
     input_variables=["context", "question"]
 )
+
 model = ChatGroq(
     model="llama-3.1-8b-instant",
-    api_key=os.getenv("grok")
+    api_key=os.getenv("grok"),
+    max_tokens= 100 
 )
 
 parser = StrOutputParser()
