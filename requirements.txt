@@ -44,3 +44,6 @@ accelerate==1.8.1
 
 # BM25 for retrieval
 rank-bm25==0.2.2
+
+safetensors==0.4.5
+datasets==3.1.0
