@@ -337,7 +337,7 @@ class ChatApp {
         this.fileInput.value = '';
     }
 
-    startNewChat() {
+    startNewChat(showWelcome = true) {
         // Close mobile menu if open
         this.closeMobileMenu();
         
@@ -358,7 +358,12 @@ class ChatApp {
         // Update UI
         this.updateChatHistory();
         this.clearMessages();
-        this.showWelcomeScreen();
+        
+        // Only show welcome screen if explicitly requested (not when called from sendMessage)
+        if (showWelcome) {
+            this.showWelcomeScreen();
+        }
+        
         this.saveToStorage();
         
         // Log for debugging
@@ -377,14 +382,14 @@ class ChatApp {
         // Ensure we have a current chat - if not, create one
         if (!this.currentChatId) {
             console.log('No current chat, creating new one');
-            this.startNewChat();
+            this.startNewChat(false); // Don't show welcome screen
         }
 
         // Get current chat - ensure it exists
         let currentChat = this.chats.find(chat => chat.id === this.currentChatId);
         if (!currentChat) {
             console.log('Current chat not found, creating new one');
-            this.startNewChat();
+            this.startNewChat(false); // Don't show welcome screen
             currentChat = this.chats.find(chat => chat.id === this.currentChatId);
         }
 
