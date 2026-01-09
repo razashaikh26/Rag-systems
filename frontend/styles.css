@@ -436,19 +436,19 @@ body {
     position: relative;
     word-wrap: break-word;
     line-height: 1.5;
+    display: inline-block;
+    max-width: 85%;
 }
 
 .message.user .message-bubble {
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
     color: white;
     margin-left: auto;
-    max-width: 80%;
 }
 
 .message.assistant .message-bubble {
     background-color: #2a2a2a;
     border: 1px solid #3f3f46;
-    max-width: 90%;
 }
 
 .message-actions {
