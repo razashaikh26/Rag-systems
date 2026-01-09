@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="new-chat-btn" id="newChatBtn">
+                    <i class="fas fa-plus"></i>
+                    New Chat
+                </button>
+            </div>
+            
+            <div class="chat-history" id="chatHistory">
+                <!-- Chat history items will be added here -->
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fas fa-user"></i>
+                    <span id="username">User</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-title">
+                    <h1>RAG Intelligence</h1>
+                </div>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="chat-container" id="chatContainer">
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-content">
+                        <i class="fas fa-robot welcome-icon"></i>
+                        <h2>Welcome to RAG Intelligence</h2>
+                        <p>Your intelligent document analysis and retrieval system</p>
+                        <div class="example-prompts">
+                            <button class="example-prompt" data-prompt="Explain quantum computing in simple terms">
+                                <i class="fas fa-atom"></i>
+                                Explain quantum computing
+                            </button>
+                            <button class="example-prompt" data-prompt="Help me write a professional email">
+                                <i class="fas fa-envelope"></i>
+                                Write a professional email
+                            </button>
+                            <button class="example-prompt" data-prompt="Create a Python function for data analysis">
+                                <i class="fab fa-python"></i>
+                                Create a Python function
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="messages" id="messages">
+                    <!-- Messages will be added here -->
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-container">
+                    <div class="file-preview" id="filePreview" style="display: none;">
+                        <div class="file-info">
+                            <i class="fas fa-file"></i>
+                            <span id="fileName"></span>
+                            <button class="remove-file" id="removeFile">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- File Upload Button -->
+                    <div class="upload-section">
+                        <button class="upload-file-btn" id="fileUploadBtn" title="Upload File">
+                            <i class="fas fa-plus"></i>
+                            <span>Upload File</span>
+                        </button>
+                        <input type="file" id="fileInput" accept=".txt,.pdf,.docx,.csv" style="display: none;">
+                    </div>
+                    
+                    <div class="message-input-container">
+                        <textarea 
+                            id="messageInput" 
+                            placeholder="Type your message..." 
+                            rows="1"
+                        ></textarea>
+                        <button class="send-btn" id="sendBtn" disabled>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Login to RAG Intelligence</h2>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginUsername">Username</label>
+                        <input type="text" id="loginUsername" required>
+                    </div>
+                    <p class="login-note">Enter any username to generate your personal session</p>
+                    <button type="submit" class="login-submit-btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
