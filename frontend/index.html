@@ -38,8 +38,16 @@
         <div class="main-content">
             <!-- Header -->
             <div class="header">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <div class="header-title">
                     <h1>RAG Intelligence</h1>
+                </div>
+                <div class="mobile-actions">
+                    <button class="mobile-logout-btn" id="mobileLogoutBtn" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
                 </div>
             </div>
 
@@ -108,6 +116,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
 
     <!-- Login Modal -->
     <div class="modal-overlay" id="loginModal">

@@ -36,6 +36,11 @@ class ChatApp {
         this.fileName = document.getElementById('fileName');
         this.loadingOverlay = document.getElementById('loadingOverlay');
         this.username = document.getElementById('username');
+        
+        // Mobile elements
+        this.mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        this.mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+        this.mobileOverlay = document.getElementById('mobileOverlay');
     }
 
     setupEventListeners() {
@@ -49,6 +54,17 @@ class ChatApp {
         this.logoutBtn.addEventListener('click', () => this.logout());
         this.fileUploadBtn.addEventListener('click', () => this.fileInput.click());
         this.removeFileBtn.addEventListener('click', () => this.removeFile());
+        
+        // Mobile menu
+        if (this.mobileMenuBtn) {
+            this.mobileMenuBtn.addEventListener('click', () => this.toggleMobileMenu());
+        }
+        if (this.mobileLogoutBtn) {
+            this.mobileLogoutBtn.addEventListener('click', () => this.logout());
+        }
+        if (this.mobileOverlay) {
+            this.mobileOverlay.addEventListener('click', () => this.closeMobileMenu());
+        }
         
         // File input
         this.fileInput.addEventListener('change', (e) => this.handleFileUpload(e));
@@ -239,6 +255,9 @@ class ChatApp {
     }
 
     logout() {
+        // Close mobile menu if open
+        this.closeMobileMenu();
+        
         localStorage.removeItem('authToken');
         localStorage.removeItem('username');
         localStorage.removeItem('chats');
@@ -957,6 +976,21 @@ class ChatApp {
             this.loadChat(currentChatId);
         } else {
             this.showWelcomeScreen();
+        }
+    }
+
+    // Mobile menu methods
+    toggleMobileMenu() {
+        this.sidebar.classList.toggle('open');
+        if (this.mobileOverlay) {
+            this.mobileOverlay.classList.toggle('show');
+        }
+    }
+
+    closeMobileMenu() {
+        this.sidebar.classList.remove('open');
+        if (this.mobileOverlay) {
+            this.mobileOverlay.classList.remove('show');
         }
     }
 }
