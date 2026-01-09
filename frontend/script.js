@@ -338,6 +338,9 @@ class ChatApp {
     }
 
     startNewChat() {
+        // Close mobile menu if open
+        this.closeMobileMenu();
+        
         // Generate new chat ID
         this.currentChatId = this.generateId();
         
@@ -406,7 +409,8 @@ class ChatApp {
         // Update chat title if it's the first message
         if (currentChat.title === 'New Chat') {
             currentChat.title = message.substring(0, 30) + (message.length > 30 ? '...' : '');
-            this.updateChatHistory();
+            // Only update chat history display, don't reload the current chat
+            this.updateChatHistoryDisplay();
         }
 
         // Clear input
@@ -854,6 +858,19 @@ class ChatApp {
             
             this.chatHistory.appendChild(chatEl);
         });
+    }
+
+    // Method to update chat history display without affecting current chat
+    updateChatHistoryDisplay() {
+        const currentActiveElement = document.querySelector('.chat-item.active');
+        this.updateChatHistory();
+        // Ensure we stay on current chat and don't navigate away
+        if (this.currentChatId) {
+            const currentChatElement = document.querySelector(`[onclick="chatApp.deleteChat('${this.currentChatId}')"]`)?.closest('.chat-item');
+            if (currentChatElement) {
+                currentChatElement.classList.add('active');
+            }
+        }
     }
 
     loadChat(chatId) {
