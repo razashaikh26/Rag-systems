@@ -9,14 +9,11 @@ load_dotenv()
 simple_prompt = PromptTemplate(
     template="""
 You are a helpful assistant.
-
 Answer the user's question clearly and concisely.
 If you do not know the answer, say:
 "I don't have enough information to answer that."
-
 Question:
 {question}
-
 Answer: 
 """,
     input_variables=["question"]
