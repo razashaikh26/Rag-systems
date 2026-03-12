@@ -4,7 +4,7 @@ import hashlib
 from fastapi import FastAPI,Depends,UploadFile, Form
 from auth.dependencies import get_scope_id
 from auth.jwtutils import create_scope_token
-from rewrite.queryrewrite import rewrite
+#from rewrite.queryrewrite import rewrite
 from simpleai import simple_chain
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 from dotenv import load_dotenv
@@ -18,11 +18,19 @@ os.environ.setdefault("HF_HOME", str(MODEL_DIR))
 TEMP_DIR.mkdir(exist_ok=True)
 from inject import inject
 
-app = FastAPI()
+app = FastAPI( 
+    docs_url="/docs",
+    redoc_url="/redoc",
+    openapi_url="/openapi.json"
+    )
+
+@app.get("/")
+def root():
+    return {"status": "RAG Backend is running"}
+
 
 @app.post("/login")
 def login(username: str):
-    # deterministic scope
     scope_id = hashlib.sha256(username.lower().encode()).hexdigest()
 
     token = create_scope_token(scope_id)
@@ -44,7 +52,7 @@ async def inject_file(
     elif filename.endswith('.txt'):
         source_type = 'txt'
     else:
-        return {"error": f"Unsupported file type. Supported: .pdf, .csv, .docx, .txt"}
+        return {"error": f"Unsupported file type. Supported:  .pdf, .csv, .docx, .txt"}
 
     # Use absolute path
     path = TEMP_DIR / file.filename
@@ -86,5 +94,15 @@ async def ask(
 
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=7860
+    )
+
+
+
+
+
+
+#

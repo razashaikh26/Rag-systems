@@ -1,7 +1,10 @@
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain_groq import ChatGroq
+from langchain_openai import ChatOpenAI
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 simple_prompt = PromptTemplate(
     template="""
@@ -14,18 +17,19 @@ If you do not know the answer, say:
 Question:
 {question}
 
-Answer:
+Answer: 
 """,
     input_variables=["question"]
 )
 
-model = ChatGroq(
-    model="llama-3.1-8b-instant",
-    api_key=os.getenv("grok"),
-    max_tokens=150
+model = ChatOpenAI(
+    model="deepseek/deepseek-chat",
+    api_key=os.getenv("openrouter").strip(),
+    base_url="https://openrouter.ai/api/v1",
+    max_tokens=500,
+    temperature=0.4
 )
 
 parser = StrOutputParser()
 
 simple_chain = simple_prompt | model | parser
-

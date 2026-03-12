@@ -1,33 +1,38 @@
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain_groq import ChatGroq
+from langchain_openai import ChatOpenAI
+from dotenv import load_dotenv
 import os
 
+load_dotenv()
+
 rag_prompt = PromptTemplate(
-    template="""
-You are a precise question-answering assistant.
+    template="""You are a precise assistant that answers questions using only the provided context.
 
-Answer the question using ONLY the context below.
-The question may be incomplete — infer the intended question and answer it correctly.
-If the answer is a person, return ONLY the person's name.
-If the answer is not present in the context, say:
-"Not in your documents."
+INSTRUCTIONS:
+- Give direct, concise answers
+- Use ONLY information from the context below
+- If asking for a name, respond with just the name
+- If asking for a date, respond with just the date
+- If information is not in the context, respond: "Not in your documents."
+- Do not repeat the question
+- Do not add extra explanations
 
-Context:
+CONTEXT:
 {context}
 
-Question:
-{question}
+QUESTION: {question}
 
-Answer:
-""",
+ANSWER:""",
     input_variables=["context", "question"]
 )
 
-model = ChatGroq(
-    model="llama-3.1-8b-instant",
-    api_key=os.getenv("grok"),
-    max_tokens= 150
+model = ChatOpenAI(
+    model="deepseek/deepseek-chat",
+    api_key=os.getenv("openrouter").strip(),
+    base_url="https://openrouter.ai/api/v1",
+    max_tokens=150,
+    temperature=0.1
 )
 
 parser = StrOutputParser()
